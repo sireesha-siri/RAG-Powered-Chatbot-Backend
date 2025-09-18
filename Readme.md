@@ -88,13 +88,14 @@ cp .env.example .env
 Edit `.env` file:
 
 ```bash
-# API Keys
-GEMINI_API_KEY=your_gemini_api_key_here
-JINA_API_KEY=your_jina_api_key_here
+# Cloud Service URLs (REPLACE WITH YOUR ACTUAL URLs)
+REDIS_URL=redis://default:your-password@redis-12345.c1.us-east1-2.gce.cloud.redislabs.com:12345
+QDRANT_URL=https://your-cluster-id.qdrant.io:6333
+QDRANT_API_KEY=your-qdrant-api-key
 
-# Database URLs
-REDIS_URL=redis://localhost:6379
-QDRANT_URL=http://localhost:6333
+# Your API Keys (KEEP YOUR EXISTING ONES)
+GEMINI_API_KEY=your-existing-gemini-key
+JINA_API_KEY=your-existing-jina-key
 
 # Server Configuration
 PORT=5000
@@ -569,3 +570,4 @@ Your backend is now ready! The system will:
 - ✅ Support real-time chat
 
 Next step: Connect your frontend to these APIs! 🚀
+
