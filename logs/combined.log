@@ -1,0 +1,1642 @@
+2025-09-18 22:59:17 [INFO]: Logger initialized
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "logLevel": "info",
+  "logsDirectory": "D:\\Github\\RAG-Powered Chatbot\\backend\\logs"
+}
+2025-09-18 22:59:20 [INFO]: Created Qdrant collection: news_articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 22:59:20 [ERROR]: Ingestion script error: newsService.getFreshArticles is not a function
+TypeError: newsService.getFreshArticles is not a function
+    at runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:59:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:174:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:00:46 [INFO]: Logger initialized
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "logLevel": "info",
+  "logsDirectory": "D:\\Github\\RAG-Powered Chatbot\\backend\\logs"
+}
+2025-09-18 23:00:48 [INFO]: Qdrant collection exists: news_articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:00:48 [ERROR]: Ingestion script error: logger is not defined
+ReferenceError: logger is not defined
+    at NewsIngestionService.ingestFiftyArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\NewsIngestionService.js:91:5)
+    at NewsIngestionService.ingestWithStrategy (D:\Github\RAG-Powered Chatbot\backend\src\services\NewsIngestionService.js:155:27)
+    at runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:59:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:170:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:02 [INFO]: Logger initialized
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "logLevel": "info",
+  "logsDirectory": "D:\\Github\\RAG-Powered Chatbot\\backend\\logs"
+}
+2025-09-18 23:02:04 [INFO]: Qdrant collection exists: news_articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [INFO]: Starting ingestion from exactly 50 RSS feeds
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [INFO]: Processing feed 1/50: https://feeds.reuters.com/reuters/topNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/topNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/topNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [INFO]: Processing feed 2/50: https://feeds.reuters.com/reuters/worldNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/worldNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/worldNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:05 [INFO]: Processing feed 3/50: https://rss.cnn.com/rss/edition.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:06 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:06 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:06 [INFO]: Processing feed 4/50: https://feeds.bbci.co.uk/news/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:07 [WARN]: Error processing article: Trump suggests Starmer could use military to control UK borders
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:07 [WARN]: ✗ No articles from: https://feeds.bbci.co.uk/news/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:07 [INFO]: Processing feed 5/50: https://feeds.npr.org/1001/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:08 [WARN]: Error processing article: Trump wraps up state visit to U.K.
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:08 [WARN]: ✗ No articles from: https://feeds.npr.org/1001/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:09 [INFO]: Processing feed 6/50: https://feeds.washingtonpost.com/rss/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:21 [WARN]: Error processing article: Two Israelis killed in gun attack at Jordanian border
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:21 [WARN]: ✗ No articles from: https://feeds.washingtonpost.com/rss/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:21 [INFO]: Processing feed 7/50: https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:23 [WARN]: Error processing article: Live Updates: Trump and Starmer Acknowledge Divide Over Palestinian Statehood
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:23 [WARN]: ✗ No articles from: https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:23 [INFO]: Processing feed 8/50: https://feeds.guardian.co.uk/theguardian/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:27 [WARN]: Error processing article: ‘I tried to escape with drugs, pills and alcohol’: Björn Borg on his misery and mayhem after quitting tennis
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:27 [WARN]: ✗ No articles from: https://feeds.guardian.co.uk/theguardian/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:27 [INFO]: Processing feed 9/50: https://feeds.usatoday.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:29 [ERROR]: Error parsing feed https://feeds.usatoday.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:29 [WARN]: ✗ No articles from: https://feeds.usatoday.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:30 [INFO]: Processing feed 10/50: https://feeds.abcnews.com/abcnews/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:32 [WARN]: Error processing article:  Trump asks SCOTUS to let him remove Lisa Cook from Fed Reserve
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:32 [WARN]: ✗ No articles from: https://feeds.abcnews.com/abcnews/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:32 [INFO]: Processing feed 11/50: https://feeds.nbcnews.com/nbcnews/public/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [WARN]: Error processing article: ABC Pulls Jimmy Kimmel off Air ‘Indefinitely,’ Igniting Divide
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [WARN]: ✗ No articles from: https://feeds.nbcnews.com/nbcnews/public/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [INFO]: Processing feed 12/50: https://feeds.yahoo.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [ERROR]: Error parsing feed https://feeds.yahoo.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [WARN]: ✗ No articles from: https://feeds.yahoo.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:34 [INFO]: Processing feed 13/50: https://rss.cbs.com/rss/cbsnews_main
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:34 [ERROR]: Error parsing feed https://rss.cbs.com/rss/cbsnews_main:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:34 [WARN]: ✗ No articles from: https://rss.cbs.com/rss/cbsnews_main
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:35 [INFO]: Processing feed 14/50: https://feeds.foxnews.com/foxnews/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:36 [WARN]: Error processing article: Fox News ‘Antisemitism Exposed’ Newsletter: NY Times' lame correction of Charlie Kirk smear
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:36 [WARN]: ✗ No articles from: https://feeds.foxnews.com/foxnews/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:36 [INFO]: Processing feed 15/50: https://feeds.apnews.com/ApNewsTopNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [ERROR]: Error parsing feed https://feeds.apnews.com/ApNewsTopNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [WARN]: ✗ No articles from: https://feeds.apnews.com/ApNewsTopNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [INFO]: Processing feed 16/50: https://feeds.reuters.com/reuters/technologyNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/technologyNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/technologyNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:38 [INFO]: Processing feed 17/50: https://rss.cnn.com/rss/edition_technology.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:38 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_technology.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:38 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition_technology.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:38 [INFO]: Processing feed 18/50: https://feeds.feedburner.com/TechCrunch
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:41 [WARN]: Error processing article: Top 10 AI Tools That Will Transform Your Content Creation in 2025
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:41 [WARN]: ✗ No articles from: https://feeds.feedburner.com/TechCrunch
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:42 [INFO]: Processing feed 19/50: https://www.theverge.com/rss/index.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:42 [WARN]: Error processing article: Google is expanding Gemini in Chrome and letting it do stuff for you
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:42 [WARN]: ✗ No articles from: https://www.theverge.com/rss/index.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:43 [INFO]: Processing feed 20/50: https://feeds.arstechnica.com/arstechnica/index
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:44 [WARN]: Error processing article: Nvidia will invest $5 billion in Intel, co-develop new server and PC chips
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:44 [WARN]: ✗ No articles from: https://feeds.arstechnica.com/arstechnica/index
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:45 [INFO]: Processing feed 21/50: https://feeds.mashable.com/Mashable
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:45 [ERROR]: Error parsing feed https://feeds.mashable.com/Mashable:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:45 [WARN]: ✗ No articles from: https://feeds.mashable.com/Mashable
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:46 [INFO]: Processing feed 22/50: https://www.wired.com/feed/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:46 [WARN]: Error processing article: Google Injects Gemini Into Chrome as AI Browsers Go Mainstream
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:46 [WARN]: ✗ No articles from: https://www.wired.com/feed/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:47 [INFO]: Processing feed 23/50: https://feeds.engadget.com/engadget
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:51 [ERROR]: Error parsing feed https://feeds.engadget.com/engadget:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:51 [WARN]: ✗ No articles from: https://feeds.engadget.com/engadget
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:51 [INFO]: Processing feed 24/50: https://feeds.gizmodo.com/gizmodo/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:52 [ERROR]: Error parsing feed https://feeds.gizmodo.com/gizmodo/current:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:52 [WARN]: ✗ No articles from: https://feeds.gizmodo.com/gizmodo/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:52 [INFO]: Processing feed 25/50: https://www.cnet.com/rss/news/
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:53 [WARN]: Error processing article: Champions League Soccer: Livestream Man City vs. Napoli Live From Anywhere
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:53 [WARN]: ✗ No articles from: https://www.cnet.com/rss/news/
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [INFO]: Processing feed 26/50: https://feeds.reuters.com/reuters/businessNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/businessNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/businessNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [INFO]: Processing feed 27/50: https://rss.cnn.com/rss/money_latest.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [ERROR]: Error parsing feed https://rss.cnn.com/rss/money_latest.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/money_latest.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:55 [INFO]: Processing feed 28/50: https://feeds.bloomberg.com/markets/news.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:01 [WARN]: Error processing article: Stock Traders Go Risk-On as Fed Fuels Profit Bets: Markets Wrap
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:01 [WARN]: ✗ No articles from: https://feeds.bloomberg.com/markets/news.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:02 [INFO]: Processing feed 29/50: https://feeds.fortune.com/fortune/headlines
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:02 [ERROR]: Error parsing feed https://feeds.fortune.com/fortune/headlines:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:02 [WARN]: ✗ No articles from: https://feeds.fortune.com/fortune/headlines
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:03 [INFO]: Processing feed 30/50: https://feeds.forbes.com/forbes/business
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [ERROR]: Error parsing feed https://feeds.forbes.com/forbes/business:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [WARN]: ✗ No articles from: https://feeds.forbes.com/forbes/business
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [INFO]: Processing feed 31/50: https://feeds.cnbc.com/cnbc/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [ERROR]: Error parsing feed https://feeds.cnbc.com/cnbc/world:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [WARN]: ✗ No articles from: https://feeds.cnbc.com/cnbc/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:07 [INFO]: Processing feed 32/50: https://feeds.wsj.com/wsj/xml/rss/3_7085.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:07 [ERROR]: Error parsing feed https://feeds.wsj.com/wsj/xml/rss/3_7085.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:07 [WARN]: ✗ No articles from: https://feeds.wsj.com/wsj/xml/rss/3_7085.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:08 [INFO]: Processing feed 33/50: https://feeds.marketwatch.com/marketwatch/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:09 [WARN]: Error processing article: Netskope leaps into a hot IPO market. The cybersecurity stock is seeing a double-digit percentage gain.
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:09 [WARN]: ✗ No articles from: https://feeds.marketwatch.com/marketwatch/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:10 [INFO]: Processing feed 34/50: https://feeds.ft.com/ft/rss/home/us
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:10 [ERROR]: Error parsing feed https://feeds.ft.com/ft/rss/home/us:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:10 [WARN]: ✗ No articles from: https://feeds.ft.com/ft/rss/home/us
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:11 [INFO]: Processing feed 35/50: https://feeds.businessinsider.com/businessinsider
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [ERROR]: Error parsing feed https://feeds.businessinsider.com/businessinsider:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [WARN]: ✗ No articles from: https://feeds.businessinsider.com/businessinsider
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [INFO]: Processing feed 36/50: https://feeds.reuters.com/reuters/scienceNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/scienceNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/scienceNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:14 [INFO]: Processing feed 37/50: https://feeds.reuters.com/reuters/healthNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:14 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/healthNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:14 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/healthNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:14 [INFO]: Processing feed 38/50: https://rss.cnn.com/rss/edition_health.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:15 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_health.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:15 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition_health.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:15 [INFO]: Processing feed 39/50: https://feeds.nature.com/nature/rss/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:17 [WARN]: Error processing article: Two tools to help you achieve career success in science
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:17 [WARN]: ✗ No articles from: https://feeds.nature.com/nature/rss/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:17 [INFO]: Processing feed 40/50: https://feeds.sciencedaily.com/sciencedaily/top_news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:18 [ERROR]: Error parsing feed https://feeds.sciencedaily.com/sciencedaily/top_news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:18 [WARN]: ✗ No articles from: https://feeds.sciencedaily.com/sciencedaily/top_news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:18 [INFO]: Processing feed 41/50: https://feeds.newscientist.com/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:20 [WARN]: Error processing article: Stunning amber deposits hold insects from the time of the dinosaurs
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:20 [WARN]: ✗ No articles from: https://feeds.newscientist.com/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:20 [INFO]: Processing feed 42/50: https://feeds.nationalgeographic.com/ng/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:21 [ERROR]: Error parsing feed https://feeds.nationalgeographic.com/ng/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:21 [WARN]: ✗ No articles from: https://feeds.nationalgeographic.com/ng/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:21 [INFO]: Processing feed 43/50: https://feeds.livescience.com/LiveScience-Home
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:30 [WARN]: Error processing article:  New report warns that China could overtake the US as top nation in space — and it could happen 'in 5-10 years,' expert claims 
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:30 [WARN]: ✗ No articles from: https://feeds.livescience.com/LiveScience-Home
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:30 [INFO]: Processing feed 44/50: https://www.aljazeera.com/xml/rss/all.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:31 [WARN]: Error processing article: Five key takeaways from Trump-Starmer meeting in UK
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:31 [WARN]: ✗ No articles from: https://www.aljazeera.com/xml/rss/all.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:31 [INFO]: Processing feed 45/50: https://feeds.dw.com/dw/english/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:33 [ERROR]: Error parsing feed https://feeds.dw.com/dw/english/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:33 [WARN]: ✗ No articles from: https://feeds.dw.com/dw/english/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:34 [INFO]: Processing feed 46/50: https://feeds.france24.com/en/latest/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:34 [ERROR]: Error parsing feed https://feeds.france24.com/en/latest/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:34 [WARN]: ✗ No articles from: https://feeds.france24.com/en/latest/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:35 [INFO]: Processing feed 47/50: https://feeds.euronews.com/en/news/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:35 [ERROR]: Error parsing feed https://feeds.euronews.com/en/news/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:35 [WARN]: ✗ No articles from: https://feeds.euronews.com/en/news/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:36 [INFO]: Processing feed 48/50: https://feeds.skynews.com/feeds/rss/world.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:36 [WARN]: Error processing article: Gaza could be 'real estate bonanza', Israeli minister says
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:36 [WARN]: ✗ No articles from: https://feeds.skynews.com/feeds/rss/world.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:37 [INFO]: Processing feed 49/50: https://feeds.independent.co.uk/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:42 [ERROR]: Error parsing feed https://feeds.independent.co.uk/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:42 [WARN]: ✗ No articles from: https://feeds.independent.co.uk/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:43 [INFO]: Processing feed 50/50: https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:43 [ERROR]: Error parsing feed https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:43 [WARN]: ✗ No articles from: https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:44 [INFO]: Successfully ingested 0/50 articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:44 [INFO]: Storing 0 articles in vector database
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:45 [ERROR]: Error storing articles: Bad Request
+Error: Bad Request
+    at Object.fun [as upsertPoints] (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\openapi-typescript-fetch\dist\cjs\fetcher.js:172:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async QdrantClient.upsert (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\js-client-rest\dist\cjs\qdrant-client.js:578:26)
+    at async RAGService.storeArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\RAGService.js:93:7)
+    at async runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:75:25)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:170:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "headers": {},
+  "url": "https://72d543ea-3c42-47a8-a03a-fcf86bc680a5.europe-west3-0.gcp.cloud.qdrant.io:6333/collections/news_articles/points?wait=true",
+  "status": 400,
+  "statusText": "Bad Request",
+  "data": {
+    "status": {
+      "error": "Bad request: Empty update request"
+    },
+    "time": 0.000245289
+  }
+}
+2025-09-18 23:15:40 [INFO]: Logger initialized
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "logLevel": "info",
+  "logsDirectory": "D:\\Github\\RAG-Powered Chatbot\\backend\\logs"
+}
+2025-09-18 23:15:42 [INFO]: Qdrant collection exists: news_articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:42 [INFO]: Starting ingestion from exactly 50 RSS feeds
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:42 [INFO]: Processing feed 1/50: https://feeds.reuters.com/reuters/topNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:42 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/topNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:42 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/topNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:43 [INFO]: Processing feed 2/50: https://feeds.reuters.com/reuters/worldNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:43 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/worldNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:43 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/worldNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:43 [INFO]: Processing feed 3/50: https://rss.cnn.com/rss/edition.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:44 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:44 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:44 [INFO]: Processing feed 4/50: https://feeds.bbci.co.uk/news/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:45 [WARN]: Error processing article: Trump suggests Starmer could use military to control UK borders
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:45 [WARN]: ✗ No articles from: https://feeds.bbci.co.uk/news/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:45 [INFO]: Processing feed 5/50: https://feeds.npr.org/1001/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:46 [WARN]: Error processing article: Trump wraps up state visit to U.K.
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:46 [WARN]: ✗ No articles from: https://feeds.npr.org/1001/rss.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:46 [INFO]: Processing feed 6/50: https://feeds.washingtonpost.com/rss/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:57 [WARN]: Error processing article: Two Israelis killed in gun attack at Jordanian border
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:57 [WARN]: ✗ No articles from: https://feeds.washingtonpost.com/rss/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:58 [INFO]: Processing feed 7/50: https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:01 [WARN]: Error processing article: Live Updates: Trump and Starmer Acknowledge Divide Over Palestinian Statehood
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:01 [WARN]: ✗ No articles from: https://rss.nytimes.com/services/xml/rss/nyt/World.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:01 [INFO]: Processing feed 8/50: https://feeds.guardian.co.uk/theguardian/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:04 [WARN]: Error processing article: ‘I tried to escape with drugs, pills and alcohol’: Björn Borg on his misery and mayhem after quitting tennis
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:04 [WARN]: ✗ No articles from: https://feeds.guardian.co.uk/theguardian/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:05 [INFO]: Processing feed 9/50: https://feeds.usatoday.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:06 [ERROR]: Error parsing feed https://feeds.usatoday.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:06 [WARN]: ✗ No articles from: https://feeds.usatoday.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:06 [INFO]: Processing feed 10/50: https://feeds.abcnews.com/abcnews/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:12 [WARN]: Error processing article:  Trump asks SCOTUS to let him remove Lisa Cook from Fed Reserve
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:12 [WARN]: ✗ No articles from: https://feeds.abcnews.com/abcnews/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:13 [INFO]: Processing feed 11/50: https://feeds.nbcnews.com/nbcnews/public/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:13 [WARN]: Error processing article: ABC Pulls Jimmy Kimmel off Air ‘Indefinitely,’ Igniting Divide
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:13 [WARN]: ✗ No articles from: https://feeds.nbcnews.com/nbcnews/public/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [INFO]: Processing feed 12/50: https://feeds.yahoo.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [ERROR]: Error parsing feed https://feeds.yahoo.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [WARN]: ✗ No articles from: https://feeds.yahoo.com/news/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [INFO]: Processing feed 13/50: https://rss.cbs.com/rss/cbsnews_main
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [ERROR]: Error parsing feed https://rss.cbs.com/rss/cbsnews_main:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [WARN]: ✗ No articles from: https://rss.cbs.com/rss/cbsnews_main
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:15 [INFO]: Processing feed 14/50: https://feeds.foxnews.com/foxnews/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [WARN]: Error processing article: Fox News ‘Antisemitism Exposed’ Newsletter: NY Times' lame correction of Charlie Kirk smear
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [WARN]: ✗ No articles from: https://feeds.foxnews.com/foxnews/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [INFO]: Processing feed 15/50: https://feeds.apnews.com/ApNewsTopNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [ERROR]: Error parsing feed https://feeds.apnews.com/ApNewsTopNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [WARN]: ✗ No articles from: https://feeds.apnews.com/ApNewsTopNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [INFO]: Processing feed 16/50: https://feeds.reuters.com/reuters/technologyNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/technologyNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/technologyNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [INFO]: Processing feed 17/50: https://rss.cnn.com/rss/edition_technology.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_technology.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition_technology.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:19 [INFO]: Processing feed 18/50: https://feeds.feedburner.com/TechCrunch
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:23 [WARN]: Error processing article: Top 10 AI Tools That Will Transform Your Content Creation in 2025
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:23 [WARN]: ✗ No articles from: https://feeds.feedburner.com/TechCrunch
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:24 [INFO]: Processing feed 19/50: https://www.theverge.com/rss/index.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:24 [WARN]: Error processing article: The FTC is suing Ticketmaster for illegally ‘coordinating’ with brokers
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:24 [WARN]: ✗ No articles from: https://www.theverge.com/rss/index.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:25 [INFO]: Processing feed 20/50: https://feeds.arstechnica.com/arstechnica/index
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:28 [WARN]: Error processing article: Nvidia will invest $5 billion in Intel, co-develop new server and PC chips
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:28 [WARN]: ✗ No articles from: https://feeds.arstechnica.com/arstechnica/index
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:28 [INFO]: Processing feed 21/50: https://feeds.mashable.com/Mashable
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:29 [ERROR]: Error parsing feed https://feeds.mashable.com/Mashable:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:29 [WARN]: ✗ No articles from: https://feeds.mashable.com/Mashable
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:29 [INFO]: Processing feed 22/50: https://www.wired.com/feed/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:35 [WARN]: Error processing article: Google Injects Gemini Into Chrome as AI Browsers Go Mainstream
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:35 [WARN]: ✗ No articles from: https://www.wired.com/feed/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:35 [INFO]: Processing feed 23/50: https://feeds.engadget.com/engadget
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:40 [ERROR]: Error parsing feed https://feeds.engadget.com/engadget:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:40 [WARN]: ✗ No articles from: https://feeds.engadget.com/engadget
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:41 [INFO]: Processing feed 24/50: https://feeds.gizmodo.com/gizmodo/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:41 [ERROR]: Error parsing feed https://feeds.gizmodo.com/gizmodo/current:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:41 [WARN]: ✗ No articles from: https://feeds.gizmodo.com/gizmodo/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:41 [INFO]: Processing feed 25/50: https://www.cnet.com/rss/news/
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [WARN]: Error processing article: Champions League Soccer: Livestream Man City vs. Napoli Live From Anywhere
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [WARN]: ✗ No articles from: https://www.cnet.com/rss/news/
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [INFO]: Processing feed 26/50: https://feeds.reuters.com/reuters/businessNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/businessNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/businessNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:44 [INFO]: Processing feed 27/50: https://rss.cnn.com/rss/money_latest.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:44 [ERROR]: Error parsing feed https://rss.cnn.com/rss/money_latest.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:44 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/money_latest.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:45 [INFO]: Processing feed 28/50: https://feeds.bloomberg.com/markets/news.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:48 [WARN]: Error processing article: Argentina Bonds Hit Lowest in Year on Growing Milei Pressure
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:48 [WARN]: ✗ No articles from: https://feeds.bloomberg.com/markets/news.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:49 [INFO]: Processing feed 29/50: https://feeds.fortune.com/fortune/headlines
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:49 [ERROR]: Error parsing feed https://feeds.fortune.com/fortune/headlines:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:49 [WARN]: ✗ No articles from: https://feeds.fortune.com/fortune/headlines
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:50 [INFO]: Processing feed 30/50: https://feeds.forbes.com/forbes/business
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:54 [ERROR]: Error parsing feed https://feeds.forbes.com/forbes/business:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:54 [WARN]: ✗ No articles from: https://feeds.forbes.com/forbes/business
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:54 [INFO]: Processing feed 31/50: https://feeds.cnbc.com/cnbc/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:55 [ERROR]: Error parsing feed https://feeds.cnbc.com/cnbc/world:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:55 [WARN]: ✗ No articles from: https://feeds.cnbc.com/cnbc/world
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:55 [INFO]: Processing feed 32/50: https://feeds.wsj.com/wsj/xml/rss/3_7085.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:56 [ERROR]: Error parsing feed https://feeds.wsj.com/wsj/xml/rss/3_7085.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:56 [WARN]: ✗ No articles from: https://feeds.wsj.com/wsj/xml/rss/3_7085.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:56 [INFO]: Processing feed 33/50: https://feeds.marketwatch.com/marketwatch/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:59 [WARN]: Error processing article: Netskope leaps into a hot IPO market. The cybersecurity stock is seeing a double-digit percentage gain.
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:59 [WARN]: ✗ No articles from: https://feeds.marketwatch.com/marketwatch/topstories
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:00 [INFO]: Processing feed 34/50: https://feeds.ft.com/ft/rss/home/us
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:00 [ERROR]: Error parsing feed https://feeds.ft.com/ft/rss/home/us:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:00 [WARN]: ✗ No articles from: https://feeds.ft.com/ft/rss/home/us
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:01 [INFO]: Processing feed 35/50: https://feeds.businessinsider.com/businessinsider
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [ERROR]: Error parsing feed https://feeds.businessinsider.com/businessinsider:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [WARN]: ✗ No articles from: https://feeds.businessinsider.com/businessinsider
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [INFO]: Processing feed 36/50: https://feeds.reuters.com/reuters/scienceNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/scienceNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/scienceNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:03 [INFO]: Processing feed 37/50: https://feeds.reuters.com/reuters/healthNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:03 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/healthNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:03 [WARN]: ✗ No articles from: https://feeds.reuters.com/reuters/healthNews
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:03 [INFO]: Processing feed 38/50: https://rss.cnn.com/rss/edition_health.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:04 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_health.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:04 [WARN]: ✗ No articles from: https://rss.cnn.com/rss/edition_health.rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:04 [INFO]: Processing feed 39/50: https://feeds.nature.com/nature/rss/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [WARN]: Error processing article: Two tools to help you achieve career success in science
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [WARN]: ✗ No articles from: https://feeds.nature.com/nature/rss/current
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [INFO]: Processing feed 40/50: https://feeds.sciencedaily.com/sciencedaily/top_news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [ERROR]: Error parsing feed https://feeds.sciencedaily.com/sciencedaily/top_news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [WARN]: ✗ No articles from: https://feeds.sciencedaily.com/sciencedaily/top_news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:07 [INFO]: Processing feed 41/50: https://feeds.newscientist.com/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:08 [WARN]: Error processing article: Stunning amber deposits hold insects from the time of the dinosaurs
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:08 [WARN]: ✗ No articles from: https://feeds.newscientist.com/latest
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:09 [INFO]: Processing feed 42/50: https://feeds.nationalgeographic.com/ng/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:09 [ERROR]: Error parsing feed https://feeds.nationalgeographic.com/ng/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:09 [WARN]: ✗ No articles from: https://feeds.nationalgeographic.com/ng/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:10 [INFO]: Processing feed 43/50: https://feeds.livescience.com/LiveScience-Home
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:22 [WARN]: Error processing article:  New report warns that China could overtake the US as top nation in space — and it could happen 'in 5-10 years,' expert claims 
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:22 [WARN]: ✗ No articles from: https://feeds.livescience.com/LiveScience-Home
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:23 [INFO]: Processing feed 44/50: https://www.aljazeera.com/xml/rss/all.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:24 [WARN]: Error processing article: Nvidia to become one of Intel’s biggest shareholders with new investment
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:24 [WARN]: ✗ No articles from: https://www.aljazeera.com/xml/rss/all.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:24 [INFO]: Processing feed 45/50: https://feeds.dw.com/dw/english/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [ERROR]: Error parsing feed https://feeds.dw.com/dw/english/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [WARN]: ✗ No articles from: https://feeds.dw.com/dw/english/news
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [INFO]: Processing feed 46/50: https://feeds.france24.com/en/latest/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [ERROR]: Error parsing feed https://feeds.france24.com/en/latest/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [WARN]: ✗ No articles from: https://feeds.france24.com/en/latest/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:29 [INFO]: Processing feed 47/50: https://feeds.euronews.com/en/news/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:29 [ERROR]: Error parsing feed https://feeds.euronews.com/en/news/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:29 [WARN]: ✗ No articles from: https://feeds.euronews.com/en/news/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:30 [INFO]: Processing feed 48/50: https://feeds.skynews.com/feeds/rss/world.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:31 [WARN]: Error processing article: Gaza could be 'real estate bonanza', Israeli minister says
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:31 [WARN]: ✗ No articles from: https://feeds.skynews.com/feeds/rss/world.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:31 [INFO]: Processing feed 49/50: https://feeds.independent.co.uk/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:35 [ERROR]: Error parsing feed https://feeds.independent.co.uk/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:35 [WARN]: ✗ No articles from: https://feeds.independent.co.uk/rss
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [INFO]: Processing feed 50/50: https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [ERROR]: Error parsing feed https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [WARN]: ✗ No articles from: https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [INFO]: Successfully ingested 0/50 articles
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [INFO]: Storing 0 articles in vector database
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:37 [ERROR]: Error storing articles: Bad Request
+Error: Bad Request
+    at Object.fun [as upsertPoints] (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\openapi-typescript-fetch\dist\cjs\fetcher.js:172:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async QdrantClient.upsert (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\js-client-rest\dist\cjs\qdrant-client.js:578:26)
+    at async RAGService.storeArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\RAGService.js:93:7)
+    at async runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:92:25)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:185:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "headers": {},
+  "url": "https://72d543ea-3c42-47a8-a03a-fcf86bc680a5.europe-west3-0.gcp.cloud.qdrant.io:6333/collections/news_articles/points?wait=true",
+  "status": 400,
+  "statusText": "Bad Request",
+  "data": {
+    "status": {
+      "error": "Bad request: Empty update request"
+    },
+    "time": 0.000115294
+  }
+}

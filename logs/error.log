@@ -1,0 +1,364 @@
+2025-09-18 22:59:20 [ERROR]: Ingestion script error: newsService.getFreshArticles is not a function
+TypeError: newsService.getFreshArticles is not a function
+    at runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:59:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:174:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:00:48 [ERROR]: Ingestion script error: logger is not defined
+ReferenceError: logger is not defined
+    at NewsIngestionService.ingestFiftyArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\NewsIngestionService.js:91:5)
+    at NewsIngestionService.ingestWithStrategy (D:\Github\RAG-Powered Chatbot\backend\src\services\NewsIngestionService.js:155:27)
+    at runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:59:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:170:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/topNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:04 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/worldNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:06 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:29 [ERROR]: Error parsing feed https://feeds.usatoday.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:33 [ERROR]: Error parsing feed https://feeds.yahoo.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:34 [ERROR]: Error parsing feed https://rss.cbs.com/rss/cbsnews_main:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [ERROR]: Error parsing feed https://feeds.apnews.com/ApNewsTopNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:37 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/technologyNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:38 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_technology.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:45 [ERROR]: Error parsing feed https://feeds.mashable.com/Mashable:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:51 [ERROR]: Error parsing feed https://feeds.engadget.com/engadget:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:52 [ERROR]: Error parsing feed https://feeds.gizmodo.com/gizmodo/current:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/businessNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:02:54 [ERROR]: Error parsing feed https://rss.cnn.com/rss/money_latest.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:02 [ERROR]: Error parsing feed https://feeds.fortune.com/fortune/headlines:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [ERROR]: Error parsing feed https://feeds.forbes.com/forbes/business:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:06 [ERROR]: Error parsing feed https://feeds.cnbc.com/cnbc/world:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:07 [ERROR]: Error parsing feed https://feeds.wsj.com/wsj/xml/rss/3_7085.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:10 [ERROR]: Error parsing feed https://feeds.ft.com/ft/rss/home/us:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [ERROR]: Error parsing feed https://feeds.businessinsider.com/businessinsider:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:13 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/scienceNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:14 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/healthNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:15 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_health.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:18 [ERROR]: Error parsing feed https://feeds.sciencedaily.com/sciencedaily/top_news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:21 [ERROR]: Error parsing feed https://feeds.nationalgeographic.com/ng/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:33 [ERROR]: Error parsing feed https://feeds.dw.com/dw/english/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:34 [ERROR]: Error parsing feed https://feeds.france24.com/en/latest/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:35 [ERROR]: Error parsing feed https://feeds.euronews.com/en/news/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:42 [ERROR]: Error parsing feed https://feeds.independent.co.uk/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:43 [ERROR]: Error parsing feed https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:03:45 [ERROR]: Error storing articles: Bad Request
+Error: Bad Request
+    at Object.fun [as upsertPoints] (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\openapi-typescript-fetch\dist\cjs\fetcher.js:172:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async QdrantClient.upsert (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\js-client-rest\dist\cjs\qdrant-client.js:578:26)
+    at async RAGService.storeArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\RAGService.js:93:7)
+    at async runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:75:25)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:170:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "headers": {},
+  "url": "https://72d543ea-3c42-47a8-a03a-fcf86bc680a5.europe-west3-0.gcp.cloud.qdrant.io:6333/collections/news_articles/points?wait=true",
+  "status": 400,
+  "statusText": "Bad Request",
+  "data": {
+    "status": {
+      "error": "Bad request: Empty update request"
+    },
+    "time": 0.000245289
+  }
+}
+2025-09-18 23:15:42 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/topNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:43 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/worldNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:15:44 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:06 [ERROR]: Error parsing feed https://feeds.usatoday.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [ERROR]: Error parsing feed https://feeds.yahoo.com/news/topstories:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:14 [ERROR]: Error parsing feed https://rss.cbs.com/rss/cbsnews_main:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:17 [ERROR]: Error parsing feed https://feeds.apnews.com/ApNewsTopNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/technologyNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:18 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_technology.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:29 [ERROR]: Error parsing feed https://feeds.mashable.com/Mashable:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:40 [ERROR]: Error parsing feed https://feeds.engadget.com/engadget:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:41 [ERROR]: Error parsing feed https://feeds.gizmodo.com/gizmodo/current:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:43 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/businessNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:44 [ERROR]: Error parsing feed https://rss.cnn.com/rss/money_latest.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:49 [ERROR]: Error parsing feed https://feeds.fortune.com/fortune/headlines:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:54 [ERROR]: Error parsing feed https://feeds.forbes.com/forbes/business:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:55 [ERROR]: Error parsing feed https://feeds.cnbc.com/cnbc/world:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:16:56 [ERROR]: Error parsing feed https://feeds.wsj.com/wsj/xml/rss/3_7085.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:00 [ERROR]: Error parsing feed https://feeds.ft.com/ft/rss/home/us:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [ERROR]: Error parsing feed https://feeds.businessinsider.com/businessinsider:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:02 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/scienceNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:03 [ERROR]: Error parsing feed https://feeds.reuters.com/reuters/healthNews:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:04 [ERROR]: Error parsing feed https://rss.cnn.com/rss/edition_health.rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:06 [ERROR]: Error parsing feed https://feeds.sciencedaily.com/sciencedaily/top_news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:09 [ERROR]: Error parsing feed https://feeds.nationalgeographic.com/ng/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [ERROR]: Error parsing feed https://feeds.dw.com/dw/english/news:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:28 [ERROR]: Error parsing feed https://feeds.france24.com/en/latest/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:29 [ERROR]: Error parsing feed https://feeds.euronews.com/en/news/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:35 [ERROR]: Error parsing feed https://feeds.independent.co.uk/rss:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:36 [ERROR]: Error parsing feed https://feeds.timesofindia.indiatimes.com/rssfeedstopstories.xml:
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development"
+}
+2025-09-18 23:17:37 [ERROR]: Error storing articles: Bad Request
+Error: Bad Request
+    at Object.fun [as upsertPoints] (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\openapi-typescript-fetch\dist\cjs\fetcher.js:172:23)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async QdrantClient.upsert (D:\Github\RAG-Powered Chatbot\backend\node_modules\@qdrant\js-client-rest\dist\cjs\qdrant-client.js:578:26)
+    at async RAGService.storeArticles (D:\Github\RAG-Powered Chatbot\backend\src\services\RAGService.js:93:7)
+    at async runIngestion (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:92:25)
+    at async main (D:\Github\RAG-Powered Chatbot\backend\scripts\ingestNews.js:185:3)
+Meta: {
+  "service": "rag-chatbot",
+  "environment": "development",
+  "headers": {},
+  "url": "https://72d543ea-3c42-47a8-a03a-fcf86bc680a5.europe-west3-0.gcp.cloud.qdrant.io:6333/collections/news_articles/points?wait=true",
+  "status": 400,
+  "statusText": "Bad Request",
+  "data": {
+    "status": {
+      "error": "Bad request: Empty update request"
+    },
+    "time": 0.000115294
+  }
+}
