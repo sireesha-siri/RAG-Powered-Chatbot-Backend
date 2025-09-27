@@ -10,7 +10,7 @@ class EmbeddingService {
   constructor() {
     this.jinaApiKey = process.env.JINA_API_KEY;
     this.baseUrl = 'https://api.jina.ai/v1/embeddings';
-    this.model = 'jina-embeddings-v2-base-en';
+    this.model = 'jina-embeddings-v3';
   }
 
   /**
@@ -19,10 +19,10 @@ class EmbeddingService {
    * @returns {Array} Array of embedding vectors
    */
   async generateEmbeddings(texts) {
+    // Ensure texts is an array FIRST - before try block
+    const inputTexts = Array.isArray(texts) ? texts : [texts];
+    
     try {
-      // Ensure texts is an array
-      const inputTexts = Array.isArray(texts) ? texts : [texts];
-      
       // Validate input
       if (inputTexts.length === 0) {
         throw new Error('No texts provided for embedding');
@@ -65,7 +65,7 @@ class EmbeddingService {
       // Fallback to dummy embeddings for development
       if (process.env.NODE_ENV === 'development') {
         logger.warn('Using dummy embeddings for development');
-        return this.generateDummyEmbeddings(inputTexts || texts);
+        return this.generateDummyEmbeddings(inputTexts); // Now inputTexts is defined
       }
       
       throw error;

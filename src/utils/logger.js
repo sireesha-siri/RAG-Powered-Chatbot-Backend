@@ -1,5 +1,6 @@
 const winston = require('winston');
 const path = require('path');
+const fs = require('fs');
 
 /**
  * Logger Utility
@@ -8,11 +9,22 @@ const path = require('path');
  */
 
 // Create logs directory if it doesn't exist
-const fs = require('fs');
 const logsDir = path.join(process.cwd(), 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
 }
+
+// Helper: Safe stringify to handle circular references
+const safeStringify = (obj) => {
+  const seen = new WeakSet();
+  return JSON.stringify(obj, (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) return "[Circular]";
+      seen.add(value);
+    }
+    return value;
+  }, 2);
+};
 
 // Custom log format
 const customFormat = winston.format.combine(
@@ -30,7 +42,7 @@ const customFormat = winston.format.combine(
     
     // Add metadata if present
     if (Object.keys(meta).length > 0) {
-      log += `\nMeta: ${JSON.stringify(meta, null, 2)}`;
+      log += `\nMeta: ${safeStringify(meta)}`;
     }
     
     return log;
@@ -46,22 +58,17 @@ const logger = winston.createLogger({
     environment: process.env.NODE_ENV || 'development'
   },
   transports: [
-    // Error log file - only errors
     new winston.transports.File({
       filename: path.join(logsDir, 'error.log'),
       level: 'error',
       maxsize: 5242880, // 5MB
       maxFiles: 5,
     }),
-    
-    // Combined log file - all levels
     new winston.transports.File({
       filename: path.join(logsDir, 'combined.log'),
-      maxsize: 5242880, // 5MB
+      maxsize: 5242880,
       maxFiles: 5,
     }),
-    
-    // Console output for development
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
@@ -76,7 +83,7 @@ if (process.env.NODE_ENV === 'production') {
   logger.remove(logger.transports.find(t => t.name === 'console'));
 }
 
-// Add additional helper methods
+// Additional helper methods
 logger.logRequest = function(req, res, next) {
   const start = Date.now();
   

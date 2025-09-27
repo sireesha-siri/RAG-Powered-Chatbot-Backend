@@ -1,0 +1,139 @@
+# RAG Chatbot Test Questions - All Categories
+
+## 📰 News & Current Affairs (Major News)
+- "What are today's top headlines?"
+- "Any breaking news about world events?"
+- "Tell me about recent political developments"
+- "What's happening in international relations?"
+- "Any major news from the BBC or CNN?"
+
+## 🚀 Technology & Startups
+- "What's the latest in AI and machine learning?"
+- "Tell me about recent tech innovations"
+- "Any news about Apple, Google, or Microsoft?"
+- "What are the latest startup developments?"
+- "How is the tech industry performing?"
+
+## 💼 Business & Finance
+- "What's happening in the stock market?"
+- "Tell me about recent business mergers or acquisitions"
+- "Any economic news or market trends?"
+- "How are major companies performing financially?"
+- "What's new in cryptocurrency or fintech?"
+
+## ⚽ Sports
+- "What are today's sports headlines?"
+- "Tell me about recent football or basketball games"
+- "Any major sports events happening?"
+- "How are the major sports leagues doing?"
+- "Any news about the Olympics or World Cup?"
+
+## 🎬 Entertainment & Pop Culture
+- "What's new in Hollywood?"
+- "Tell me about recent movie or TV show releases"
+- "Any celebrity news or entertainment updates?"
+- "What's trending in music?"
+- "Any award shows or entertainment events?"
+
+## 🏥 Health & Wellness
+- "What's the latest health news?"
+- "Any updates on medical research or breakthroughs?"
+- "Tell me about wellness trends"
+- "What's new in mental health awareness?"
+- "Any public health announcements?"
+
+## 🔬 Science & Education
+- "What's new in space exploration or NASA?"
+- "Tell me about recent scientific discoveries"
+- "Any educational technology developments?"
+- "What's happening in climate science?"
+- "Any breakthroughs in medical research?"
+
+## ✈️ Travel & Lifestyle
+- "What are the latest travel trends?"
+- "Tell me about new travel destinations"
+- "Any lifestyle or culture news?"
+- "What's new in food and dining?"
+- "Any travel advisories or updates?"
+
+## 🎨 Hobbies & Special Interests
+- "What's new in gaming?"
+- "Tell me about recent book releases"
+- "Any photography or art news?"
+- "What's trending in cooking or recipes?"
+- "Any hobby-related developments?"
+
+## 💻 Web Development & Technology
+- "What's new in WordPress or web development?"
+- "Tell me about recent programming trends"
+- "Any updates on web technologies?"
+- "What's happening in the developer community?"
+- "Any new tools for web developers?"
+
+---
+
+## Cross-Category Test Questions
+Test the bot's ability to find relevant content across multiple categories:
+
+- "Tell me about technology companies in the stock market"
+- "Any health-related tech innovations?"
+- "What's the business impact of recent sports events?"
+- "How is entertainment industry performing financially?"
+- "Any travel restrictions due to health concerns?"
+
+---
+
+## Follow-up Questions
+Test conversational abilities:
+
+- Ask a general question, then follow up with "Tell me more about that"
+- Ask "What are the sources for this information?"
+- Ask "Can you explain that in simpler terms?"
+- Ask related questions in the same category
+
+---
+
+## Edge Cases to Test
+- Very specific questions that might not have matches
+- Questions with spelling errors or typos
+- Very long questions (near 1000 character limit)
+- Questions in different formats (How, What, Why, When)
+- Questions asking for opinions vs facts
+
+---
+
+## Expected Behavior
+✅ **Should work well:**
+- Questions related to recent news (articles from ingestion)
+- Broad category questions
+- Specific company/entity names mentioned in articles
+- Follow-up questions in same context
+
+⚠️ **May have limited results:**
+- Very specific questions not covered in articles
+- Questions about events after article publish dates
+- Very niche topics not in RSS feeds
+
+❌ **Won't work:**
+- Questions requiring real-time data
+- Personal advice or recommendations
+- Questions about local/regional news not in feeds
+- Questions requiring calculations or data analysis
+
+---
+
+## Testing Tips
+1. **Start broad, then narrow down** - "Technology news" → "Apple news" → "iPhone updates"
+2. **Check source attribution** - Every answer should show which articles were used
+3. **Test different phrasings** - Same question asked different ways
+4. **Verify recency** - Bot should respond based on ingested article dates
+5. **Test session persistence** - Refresh page and continue conversation
+
+---
+
+## Success Metrics
+- ✅ Relevant responses for 8/10 category types
+- ✅ Source attribution appears consistently  
+- ✅ Response quality is informative and contextual
+- ✅ Session maintains conversation context
+- ✅ UI is responsive and user-friendly

@@ -69,13 +69,21 @@ class SessionManager {
     try {
       const sessionData = await this.getSession(sessionId);
       if (!sessionData) {
-        throw new Error('Session not found');
+        // Create new session if it doesn't exist instead of throwing error
+        logger.warn(`Session ${sessionId} not found, creating new session`);
+        await this.createSessionWithId(sessionId);
+        const newSessionData = await this.getSession(sessionId);
+        if (!newSessionData) {
+          throw new Error('Failed to create session');
+        }
+        sessionData = newSessionData;
       }
 
       // Add new message to history
       sessionData.messages.push({
         ...message,
-        id: uuidv4()
+        id: uuidv4(),
+        timestamp: message.timestamp || new Date().toISOString()
       });
 
       // Keep only last 50 messages to prevent memory issues
@@ -103,6 +111,31 @@ class SessionManager {
     }
   }
 
+  // Create session with specific ID (helper method)
+  async createSessionWithId(sessionId) {
+    try {
+      const sessionData = {
+        id: sessionId,
+        createdAt: new Date().toISOString(),
+        messages: [],
+        lastActivity: new Date().toISOString()
+      };
+
+      const TTL = parseInt(process.env.SESSION_TTL) || 3600;
+      await this.client.setEx(
+        `session:${sessionId}`, 
+        TTL, 
+        JSON.stringify(sessionData)
+      );
+
+      logger.info(`Created session with ID: ${sessionId}`);
+      return sessionId;
+    } catch (error) {
+      logger.error('Error creating session with ID:', error);
+      throw error;
+    }
+  }
+
   // Get session data including all chat history
   async getSession(sessionId) {
     try {
@@ -110,7 +143,7 @@ class SessionManager {
       return data ? JSON.parse(data) : null;
     } catch (error) {
       logger.error('Error getting session:', error);
-      throw error;
+      return null; // Return null instead of throwing error
     }
   }
 
@@ -118,19 +151,32 @@ class SessionManager {
   async getSessionHistory(sessionId) {
     try {
       const sessionData = await this.getSession(sessionId);
-      return sessionData ? sessionData.messages : [];
+      if (!sessionData) {
+        // Create empty session if it doesn't exist
+        await this.createSessionWithId(sessionId);
+        return [];
+      }
+      return sessionData.messages || [];
     } catch (error) {
       logger.error('Error getting session history:', error);
-      throw error;
+      return []; // Return empty array instead of throwing error
     }
   }
 
   // Clear all messages from a session (reset chat)
   async clearSession(sessionId) {
     try {
-      const sessionData = await this.getSession(sessionId);
+      let sessionData = await this.getSession(sessionId);
+      
       if (!sessionData) {
-        throw new Error('Session not found');
+        // Create new session if it doesn't exist
+        logger.warn(`Session ${sessionId} not found for clearing, creating new session`);
+        await this.createSessionWithId(sessionId);
+        sessionData = await this.getSession(sessionId);
+        
+        if (!sessionData) {
+          throw new Error('Failed to create session for clearing');
+        }
       }
 
       // Reset messages but keep session info
@@ -155,6 +201,12 @@ class SessionManager {
   // Delete session completely
   async deleteSession(sessionId) {
     try {
+      const exists = await this.client.exists(`session:${sessionId}`);
+      if (!exists) {
+        logger.warn(`Session ${sessionId} does not exist for deletion`);
+        return false;
+      }
+
       await this.client.del(`session:${sessionId}`);
       logger.info(`Deleted session: ${sessionId}`);
       return true;
@@ -167,6 +219,17 @@ class SessionManager {
   // Check if Redis is connected
   isConnected() {
     return this.client && this.client.isReady;
+  }
+
+  // Check if session exists
+  async sessionExists(sessionId) {
+    try {
+      const exists = await this.client.exists(`session:${sessionId}`);
+      return exists === 1;
+    } catch (error) {
+      logger.error('Error checking session existence:', error);
+      return false;
+    }
   }
 
   // Get all active sessions (for admin purposes)
@@ -214,6 +277,18 @@ class SessionManager {
     } catch (error) {
       logger.error('Error cleaning up sessions:', error);
       throw error;
+    }
+  }
+
+  // Graceful disconnect
+  async disconnect() {
+    try {
+      if (this.client) {
+        await this.client.disconnect();
+        logger.info('Disconnected from Redis');
+      }
+    } catch (error) {
+      logger.error('Error disconnecting from Redis:', error);
     }
   }
 }

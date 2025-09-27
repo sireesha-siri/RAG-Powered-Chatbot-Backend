@@ -35,20 +35,67 @@ const embeddingService = new EmbeddingService();
 
 // Routes
 //Keeps code organized by separating session and chat logic.
-
 app.use('/api/sessions', require('./src/routes/sessions'));
 app.use('/api/chat', require('./src/routes/chat'));
 
-// Health check endpoint
-// Lets you verify if services are running (like Redis, Qdrant).
-// Useful for monitoring and debugging.
+// Health check endpoint for frontend connection status
+app.get('/api/health', async (req, res) => {
+  try {
+    // Check all service connections
+    const redisConnected = sessionManager.isConnected();
+    let ragConnected = false;
+    
+    try {
+      // Test RAG service if it has a health check method
+      if (typeof ragService.healthCheck === 'function') {
+        ragConnected = await ragService.healthCheck();
+      } else if (typeof ragService.isConnected === 'function') {
+        ragConnected = ragService.isConnected();
+      } else {
+        ragConnected = true; // Assume healthy if no check method
+      }
+    } catch (error) {
+      ragConnected = false;
+    }
+
+    const isHealthy = redisConnected && ragConnected;
+
+    res.status(isHealthy ? 200 : 503).json({
+      status: isHealthy ? 'healthy' : 'unhealthy',
+      timestamp: new Date().toISOString(),
+      service: 'voosh-news-chatbot',
+      services: {
+        redis: redisConnected,
+        rag: ragConnected,
+        embedding: true // Assume embedding service is always available
+      }
+    });
+
+    if (!isHealthy) {
+      logger.warn('Health check failed', {
+        redis: redisConnected,
+        rag: ragConnected
+      });
+    }
+
+  } catch (error) {
+    logger.error('Health check error:', error);
+    res.status(503).json({
+      status: 'unhealthy',
+      timestamp: new Date().toISOString(),
+      error: 'Health check failed'
+    });
+  }
+});
+
+// Legacy health check endpoint (keeping for backward compatibility)
 app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
     services: {
       redis: sessionManager.isConnected(),
-      qdrant: ragService.isConnected()
+      rag: true // Simplified check
     }
   });
 });

@@ -83,17 +83,17 @@ router.get('/:sessionId/history', async (req, res) => {
 
     logger.info(`Getting history for session: ${sessionId}`);
 
-    const history = await sessionManager.getSessionHistory(sessionId);
-    
-    if (!history) {
-      return res.status(404).json({
-        error: 'Session not found',
-        sessionId: sessionId
-      });
+    // Check if session exists first, create if it doesn't
+    const sessionExists = await sessionManager.sessionExists(sessionId);
+    if (!sessionExists) {
+      logger.info(`Session ${sessionId} doesn't exist, creating new one`);
+      await sessionManager.createSessionWithId(sessionId);
     }
 
+    const history = await sessionManager.getSessionHistory(sessionId);
+
     // Apply pagination if requested
-    let paginatedHistory = history;
+    let paginatedHistory = history || [];
     if (limit) {
       const limitNum = parseInt(limit);
       const offsetNum = parseInt(offset) || 0;
@@ -135,15 +135,9 @@ router.delete('/:sessionId/history', async (req, res) => {
     
     logger.info(`Clearing history for session: ${sessionId}`);
 
+    // Use the improved clearSession method that handles missing sessions
     const result = await sessionManager.clearSession(sessionId);
     
-    if (!result) {
-      return res.status(404).json({
-        error: 'Session not found',
-        sessionId: sessionId
-      });
-    }
-
     res.json({
       success: true,
       message: 'Chat history cleared successfully',
@@ -157,7 +151,8 @@ router.delete('/:sessionId/history', async (req, res) => {
     logger.error('Error clearing session history:', error);
     res.status(500).json({
       error: 'Failed to clear chat history',
-      sessionId: req.params.sessionId
+      sessionId: req.params.sessionId,
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -177,7 +172,7 @@ router.delete('/:sessionId', async (req, res) => {
     
     if (!result) {
       return res.status(404).json({
-        error: 'Session not found',
+        error: 'Session not found or already deleted',
         sessionId: sessionId
       });
     }
@@ -243,12 +238,10 @@ router.post('/:sessionId/extend', async (req, res) => {
     const { sessionId } = req.params;
     const { hours = 1 } = req.body;
 
-    const sessionExists = await sessionManager.getSession(sessionId);
+    // Check if session exists, create if it doesn't
+    const sessionExists = await sessionManager.sessionExists(sessionId);
     if (!sessionExists) {
-      return res.status(404).json({
-        error: 'Session not found',
-        sessionId: sessionId
-      });
+      await sessionManager.createSessionWithId(sessionId);
     }
 
     // Extend TTL by adding a dummy message (this refreshes the TTL)
@@ -353,6 +346,38 @@ router.post('/cleanup', async (req, res) => {
     logger.error('Error cleaning up sessions:', error);
     res.status(500).json({
       error: 'Failed to cleanup sessions'
+    });
+  }
+});
+
+/**
+ * POST /api/sessions/:sessionId/validate
+ * Validate if session exists and is active
+ */
+router.post('/:sessionId/validate', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    const exists = await sessionManager.sessionExists(sessionId);
+    const sessionData = exists ? await sessionManager.getSession(sessionId) : null;
+    
+    res.json({
+      success: true,
+      exists: exists,
+      sessionId: sessionId,
+      session: exists ? {
+        createdAt: sessionData.createdAt,
+        lastActivity: sessionData.lastActivity,
+        messageCount: sessionData.messages.length
+      } : null,
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    logger.error('Error validating session:', error);
+    res.status(500).json({
+      error: 'Failed to validate session',
+      sessionId: req.params.sessionId
     });
   }
 });
