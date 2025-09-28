@@ -3,11 +3,8 @@ const { QdrantClient } = require('@qdrant/js-client-rest');
 const EmbeddingService = require('./EmbeddingService');
 const logger = require('../utils/logger');
 
-/**
- * RAGService combines Retrieval + AI Generation
- * Purpose: Find relevant news articles and generate smart answers
- * Flow: User Question → Find Similar Articles → AI Creates Answer
- */
+// Service for RAG (Retrieval + Generation)
+// Flow: User Question → Find Similar Articles → AI Generates Answer
 class RAGService {
   constructor() {
     this.embeddingService = new EmbeddingService();
@@ -20,6 +17,7 @@ class RAGService {
     this.geminiBaseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
   }
 
+  // Create Qdrant collection if it doesn’t exist
   async initialize() {
     try {
       const collections = await this.qdrantClient.getCollections();
@@ -29,10 +27,7 @@ class RAGService {
 
       if (!collectionExists) {
         await this.qdrantClient.createCollection(this.collectionName, {
-          vectors: {
-            size: 1024,
-            distance: 'Cosine'
-          }
+          vectors: { size: 1024, distance: 'Cosine' }
         });
         logger.info(`Created Qdrant collection: ${this.collectionName}`);
       } else {
@@ -44,16 +39,17 @@ class RAGService {
     }
   }
 
+  // Store news articles in Qdrant with embeddings
   async storeArticles(articles) {
     try {
       logger.info(`Storing ${articles.length} articles in vector database`);
-      
       const points = [];
-      
+
       for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
-        const textForEmbedding = `${article.title || ''} ${article.description || ''} ${article.content || ''}`;
-        const embeddings = await this.embeddingService.generateEmbeddings([textForEmbedding]);
+        const text = `${article.title || ''} ${article.description || ''} ${article.content || ''}`;
+
+        const embeddings = await this.embeddingService.generateEmbeddings([text]);
         const embedding = embeddings[0].embedding;
 
         points.push({
@@ -74,12 +70,8 @@ class RAGService {
         logger.info(`Processed article ${i + 1}/${articles.length}: ${article.title?.substring(0, 50)}...`);
       }
 
-      await this.qdrantClient.upsert(this.collectionName, {
-        wait: true,
-        points: points
-      });
-
-      logger.info(`Successfully stored ${points.length} articles in vector database`);
+      await this.qdrantClient.upsert(this.collectionName, { wait: true, points });
+      logger.info(`Stored ${points.length} articles successfully`);
       return points.length;
     } catch (error) {
       logger.error('Error storing articles:', error);
@@ -87,6 +79,7 @@ class RAGService {
     }
   }
 
+  // Search similar articles in Qdrant for a user query
   async retrieveRelevantPassages(query, k = 5) {
     try {
       logger.info(`Retrieving top-${k} passages for query: "${query}"`);
@@ -99,7 +92,7 @@ class RAGService {
         score_threshold: 0.3
       });
 
-      const relevantPassages = searchResult.map(result => ({
+      return searchResult.map(result => ({
         title: result.payload.title,
         content: result.payload.content,
         description: result.payload.description,
@@ -109,23 +102,21 @@ class RAGService {
         similarity: result.score,
         relevantText: this.extractRelevantText(result.payload, query)
       }));
-
-      logger.info(`Found ${relevantPassages.length} relevant passages`);
-      return relevantPassages;
     } catch (error) {
       logger.error('Error retrieving passages:', error);
       return [];
     }
   }
 
+  // Generate an AI answer using Gemini based on retrieved articles
   async generateAnswer(query, context) {
     try {
       if (!context || context.length === 0) {
-        return "I couldn't find any relevant news articles to answer your question. Could you please try rephrasing your question?";
+        return "I couldn't find any relevant news. Please try rephrasing your question.";
       }
 
-      const contextText = context.map((article, index) => 
-        `Article ${index + 1}:
+      const contextText = context.map((article, i) => 
+        `Article ${i + 1}:
 Title: ${article.title}
 Content: ${article.relevantText || article.description || article.content.substring(0, 500)}
 Source: ${article.source}
@@ -133,79 +124,49 @@ Date: ${article.publishDate}
 ---`
       ).join('\n');
 
-      const prompt = `You are a helpful news assistant. Based on the following news articles, answer the user's question accurately and concisely.
+      const prompt = `You are a helpful news assistant. Use only these articles to answer the question.
 
-Context (News Articles):
+Context:
 ${contextText}
 
 User Question: ${query}
 
-Instructions:
-1. Answer based only on the provided articles
-2. Be concise but informative
-3. Mention relevant sources when possible
-4. If the articles don't contain enough information, say so
-5. Keep the response under 300 words
-
-Answer:`;
-
-      logger.info('Generating answer with Gemini API');
+Answer:`; // (kept simple, instructions cut short)
 
       const response = await axios.post(
         `${this.geminiBaseUrl}?key=${this.geminiApiKey}`,
         {
-          contents: [{
-            parts: [{
-              text: prompt
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          }
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, topK: 40, topP: 0.95, maxOutputTokens: 1024 }
         },
-        {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          timeout: 30000
-        }
+        { headers: { 'Content-Type': 'application/json' }, timeout: 30000 }
       );
 
-      if (!response.data?.candidates?.[0]?.content?.parts?.[0]?.text) {
-        throw new Error('Invalid response from Gemini API');
-      }
-
-      const answer = response.data.candidates[0].content.parts[0].text;
-      logger.info('Successfully generated answer');
-      
-      return answer;
+      const answer = response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      return answer || "Sorry, I couldn’t generate a response.";
     } catch (error) {
       logger.error('Error generating answer:', error);
 
       if (context.length > 0) {
-        return `Here are the key points from the most relevant article about "${query}":\n\nTitle: ${context[0].title}\nSummary: ${context[0].description || context[0].content.substring(0, 200)}...`;
+        return `Summary of most relevant article:\n\nTitle: ${context[0].title}\n${context[0].description || context[0].content.substring(0, 200)}...`;
       }
 
-      return "I apologize, but I'm having trouble generating a response right now. Please try again later.";
+      return "I’m having trouble generating a response right now. Please try again later.";
     }
   }
 
+  // Pick best matching sentence from article for context
   extractRelevantText(articlePayload, query) {
     const { title, description, content } = articlePayload;
     const fullText = `${title} ${description} ${content}`;
-    const queryWords = query.toLowerCase().split(' ').filter(word => word.length > 2);
-    const sentences = fullText.split(/[.!?]+/).filter(sentence => sentence.length > 20);
+    const queryWords = query.toLowerCase().split(' ').filter(w => w.length > 2);
+    const sentences = fullText.split(/[.!?]+/).filter(s => s.length > 20);
 
     let bestSentence = '';
     let maxMatches = 0;
 
     for (const sentence of sentences) {
-      const lowerSentence = sentence.toLowerCase();
-      const matches = queryWords.filter(word => lowerSentence.includes(word)).length;
-
+      const matches = queryWords.filter(w => sentence.toLowerCase().includes(w)).length;
       if (matches > maxMatches) {
         maxMatches = matches;
         bestSentence = sentence.trim();
@@ -215,6 +176,7 @@ Answer:`;
     return bestSentence || description || content.substring(0, 300);
   }
 
+  // Get stats of the Qdrant collection
   async getCollectionStats() {
     try {
       const info = await this.qdrantClient.getCollection(this.collectionName);
@@ -225,28 +187,29 @@ Answer:`;
         status: info.status
       };
     } catch (error) {
-      logger.error('Error getting collection stats:', error);
+      logger.error('Error getting stats:', error);
       return { error: error.message };
     }
   }
 
+  // Search articles quickly by keywords
   async searchArticles(keywords, limit = 10) {
     try {
       const queryEmbedding = await this.embeddingService.generateQueryEmbedding(keywords);
       const searchResult = await this.qdrantClient.search(this.collectionName, {
         vector: queryEmbedding,
-        limit: limit,
+        limit,
         with_payload: true
       });
 
-      return searchResult.map(result => ({
-        id: result.id,
-        title: result.payload.title,
-        description: result.payload.description,
-        url: result.payload.url,
-        source: result.payload.source,
-        publishDate: result.payload.publishDate,
-        similarity: result.score
+      return searchResult.map(r => ({
+        id: r.id,
+        title: r.payload.title,
+        description: r.payload.description,
+        url: r.payload.url,
+        source: r.payload.source,
+        publishDate: r.payload.publishDate,
+        similarity: r.score
       }));
     } catch (error) {
       logger.error('Error searching articles:', error);
@@ -254,11 +217,12 @@ Answer:`;
     }
   }
 
+  // Delete all articles from Qdrant
   async clearAllArticles() {
     try {
       await this.qdrantClient.deleteCollection(this.collectionName);
       await this.initialize();
-      logger.info('Cleared all articles from vector database');
+      logger.info('Cleared all articles');
       return true;
     } catch (error) {
       logger.error('Error clearing articles:', error);
@@ -266,20 +230,21 @@ Answer:`;
     }
   }
 
+  // Check if Qdrant is connected
   async isConnected() {
     try {
       await this.qdrantClient.getCollections();
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   }
 
+  // Service health check
   async healthCheck() {
     try {
       const isQdrantConnected = await this.isConnected();
       const stats = await this.getCollectionStats();
-      
       return {
         status: 'healthy',
         qdrant: isQdrantConnected,
