@@ -470,4 +470,14 @@ Your enhanced RAG chatbot now provides:
 - **Sub-second response times** for similarity search
 - **10 categories** with balanced representation
 
+## 🙏 Acknowledgments
+
+This backend was developed with assistance from AI-powered development tools:
+
+- **[Anthropic Claude](https://www.anthropic.com/claude)** - RAG pipeline architecture, vector database optimization, and comprehensive RSS feed integration strategy
+- **[ChatGPT](https://openai.com/chatgpt)** - API integration troubleshooting, error handling patterns, and backend logic refinement
+
+These tools provided technical guidance, code optimization suggestions, and best practices for building production-ready AI systems.
+
+
 Your RAG system is now enterprise-ready with comprehensive news intelligence! 🎯
