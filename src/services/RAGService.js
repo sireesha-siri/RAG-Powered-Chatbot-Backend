@@ -4,7 +4,17 @@ const EmbeddingService = require('./EmbeddingService');
 const logger = require('../utils/logger');
 
 // Service for RAG (Retrieval + Generation)
-// Flow: User Question → Find Similar Articles → AI Generates Answer
+// Flow:
+// User Question
+//      ↓
+// Generate Query Embedding
+//      ↓
+// Search Similar Articles in Qdrant
+//      ↓
+// Send Retrieved Context to Gemini
+//      ↓
+// Generate Final Answer
+
 class RAGService {
   constructor() {
     this.embeddingService = new EmbeddingService();
@@ -18,32 +28,30 @@ class RAGService {
 
     this.geminiApiKey = process.env.GEMINI_API_KEY;
 
-    // Gemini model
+    // Stable Gemini model
     this.geminiBaseUrl =
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
   }
 
-  // Create Qdrant collection if it doesn’t exist
+  // ============================================================
+  // INITIALIZE QDRANT
+  // ============================================================
+
   async initialize() {
     try {
-      const collections =
-        await this.qdrantClient.getCollections();
+      const collections = await this.qdrantClient.getCollections();
 
-      const collectionExists =
-        collections.collections.some(
-          col => col.name === this.collectionName
-        );
+      const collectionExists = collections.collections.some(
+        col => col.name === this.collectionName
+      );
 
       if (!collectionExists) {
-        await this.qdrantClient.createCollection(
-          this.collectionName,
-          {
-            vectors: {
-              size: 1024,
-              distance: 'Cosine'
-            }
-          }
-        );
+        await this.qdrantClient.createCollection(this.collectionName, {
+          vectors: {
+            size: 1024,
+            distance: 'Cosine',
+          },
+        });
 
         logger.info(
           `Created Qdrant collection: ${this.collectionName}`
@@ -54,16 +62,15 @@ class RAGService {
         );
       }
     } catch (error) {
-      logger.error(
-        'Error initializing RAG service:',
-        error
-      );
-
+      logger.error('Error initializing RAG service:', error);
       throw error;
     }
   }
 
-  // Store news articles in Qdrant with embeddings
+  // ============================================================
+  // STORE ARTICLES
+  // ============================================================
+
   async storeArticles(articles) {
     try {
       logger.info(
@@ -75,14 +82,14 @@ class RAGService {
       for (let i = 0; i < articles.length; i++) {
         const article = articles[i];
 
-        const text = `${article.title || ''} ${
-          article.description || ''
-        } ${article.content || ''}`;
+        const text = `
+          ${article.title || ''}
+          ${article.description || ''}
+          ${article.content || ''}
+        `.trim();
 
         const embeddings =
-          await this.embeddingService.generateEmbeddings(
-            [text]
-          );
+          await this.embeddingService.generateEmbeddings([text]);
 
         const embedding = embeddings[0].embedding;
 
@@ -97,30 +104,24 @@ class RAGService {
             content: article.content || '',
             url: article.link || '',
             publishDate:
-              article.pubDate ||
-              new Date().toISOString(),
+              article.pubDate || new Date().toISOString(),
             source: article.source || 'Unknown',
             category: article.category || 'General',
-            createdAt:
-              new Date().toISOString()
-          }
+            createdAt: new Date().toISOString(),
+          },
         });
 
         logger.info(
-          `Processed article ${i + 1}/${articles.length}: ${article.title?.substring(
-            0,
-            50
-          )}...`
+          `Processed article ${i + 1}/${articles.length}: ${
+            article.title?.substring(0, 50) || ''
+          }...`
         );
       }
 
-      await this.qdrantClient.upsert(
-        this.collectionName,
-        {
-          wait: true,
-          points
-        }
-      );
+      await this.qdrantClient.upsert(this.collectionName, {
+        wait: true,
+        points,
+      });
 
       logger.info(
         `Stored ${points.length} articles successfully`
@@ -128,16 +129,15 @@ class RAGService {
 
       return points.length;
     } catch (error) {
-      logger.error(
-        'Error storing articles:',
-        error
-      );
-
+      logger.error('Error storing articles:', error);
       throw error;
     }
   }
 
-  // Search similar articles in Qdrant for a user query
+  // ============================================================
+  // RETRIEVE RELEVANT ARTICLES
+  // ============================================================
+
   async retrieveRelevantPassages(query, k = 5) {
     try {
       logger.info(
@@ -145,20 +145,21 @@ class RAGService {
       );
 
       const queryEmbedding =
-        await this.embeddingService.generateQueryEmbedding(
-          query
-        );
+        await this.embeddingService.generateQueryEmbedding(query);
 
-      const searchResult =
-        await this.qdrantClient.search(
-          this.collectionName,
-          {
-            vector: queryEmbedding,
-            limit: k,
-            with_payload: true,
-            score_threshold: 0.3
-          }
-        );
+      const searchResult = await this.qdrantClient.search(
+        this.collectionName,
+        {
+          vector: queryEmbedding,
+          limit: k,
+          with_payload: true,
+          score_threshold: 0.3,
+        }
+      );
+
+      logger.info(
+        `Retrieved ${searchResult.length} relevant articles`
+      );
 
       return searchResult.map(result => ({
         title: result.payload.title,
@@ -166,15 +167,13 @@ class RAGService {
         description: result.payload.description,
         url: result.payload.url,
         source: result.payload.source,
-        publishDate:
-          result.payload.publishDate,
+        publishDate: result.payload.publishDate,
         similarity: result.score,
 
-        relevantText:
-          this.extractRelevantText(
-            result.payload,
-            query
-          )
+        relevantText: this.extractRelevantText(
+          result.payload,
+          query
+        ),
       }));
     } catch (error) {
       logger.error(
@@ -186,8 +185,10 @@ class RAGService {
     }
   }
 
-  // Generate an AI answer using Gemini
-  // with automatic retry for temporary 503 errors
+  // ============================================================
+  // GENERATE ANSWER USING GEMINI
+  // ============================================================
+
   async generateAnswer(query, context) {
     try {
       if (!context || context.length === 0) {
@@ -198,25 +199,29 @@ class RAGService {
         .map(
           (article, i) =>
             `Article ${i + 1}:
-Title: ${article.title}
+Title: ${article.title || 'Unknown'}
 Content: ${
               article.relevantText ||
               article.description ||
-              article.content.substring(0, 500)
+              (article.content
+                ? article.content.substring(0, 500)
+                : '')
             }
-Source: ${article.source}
-Date: ${article.publishDate}
+Source: ${article.source || 'Unknown'}
+Date: ${article.publishDate || 'Unknown'}
+URL: ${article.url || ''}
 ---`
         )
         .join('\n');
 
       const prompt = `You are a helpful news assistant.
 
-Use ONLY the provided articles to answer the user's question.
-
-If the articles do not contain enough information to answer the question, clearly say that the available articles do not contain enough information.
-
-Do not invent facts.
+IMPORTANT RULES:
+1. Answer the user's question using ONLY the provided articles.
+2. Do not invent information.
+3. If the articles do not contain enough information, say that the available articles do not provide enough information.
+4. Keep the answer concise and useful.
+5. Mention relevant details from the sources when possible.
 
 Context:
 ${contextText}
@@ -226,175 +231,166 @@ ${query}
 
 Answer:`;
 
-      // Maximum number of attempts
+      logger.info(
+        `Sending request to Gemini using gemini-3.6-flash`
+      );
+
+      // Retry a few times for temporary 503/429 errors.
       const maxAttempts = 3;
 
-      // Retry delays:
-      // Attempt 1 → immediately
-      // Attempt 2 → after 2 seconds
-      // Attempt 3 → after 4 seconds
-      const retryDelays = [
-        2000,
-        4000
-      ];
-
-      let response = null;
-
-      for (
-        let attempt = 1;
-        attempt <= maxAttempts;
-        attempt++
-      ) {
+      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
         try {
           logger.info(
             `Sending request to Gemini (attempt ${attempt}/${maxAttempts})`
           );
 
-          response = await axios.post(
-            this.geminiBaseUrl,
+          const response = await axios.post(
+            `${this.geminiBaseUrl}?key=${this.geminiApiKey}`,
             {
               contents: [
                 {
                   parts: [
                     {
-                      text: prompt
-                    }
-                  ]
-                }
+                      text: prompt,
+                    },
+                  ],
+                },
               ],
 
               generationConfig: {
-                maxOutputTokens: 1024
-              }
+                maxOutputTokens: 512,
+              },
             },
             {
               headers: {
                 'Content-Type': 'application/json',
-                'x-goog-api-key':
-                  this.geminiApiKey
               },
 
-              timeout: 30000
+              // Give Gemini more than the old 30 seconds.
+              timeout: 55000,
             }
           );
 
-          // If request succeeds, stop retrying
-          break;
-        } catch (error) {
-          const status =
-            error.response?.status;
+          const answer =
+            response.data?.candidates?.[0]?.content?.parts?.[0]
+              ?.text;
 
-          const errorData =
-            error.response?.data;
-
-          logger.error(
-            `Gemini attempt ${attempt} failed:`,
-            errorData || error.message
-          );
-
-          // Only retry temporary server errors
-          if (
-            status === 503 &&
-            attempt < maxAttempts
-          ) {
-            const delay =
-              retryDelays[attempt - 1];
-
-            logger.warn(
-              `Gemini is temporarily unavailable. Retrying in ${delay / 1000} seconds...`
+          if (answer) {
+            logger.info(
+              'Gemini generated answer successfully'
             );
 
-            await new Promise(resolve =>
-              setTimeout(resolve, delay)
-            );
-
-            continue;
+            return answer;
           }
 
-          // For non-503 errors, stop immediately
-          throw error;
+          logger.warn(
+            'Gemini returned no answer text'
+          );
+        } catch (error) {
+          const status = error.response?.status;
+
+          logger.error(
+            `Gemini request failed on attempt ${attempt}`,
+            {
+              status,
+              message:
+                error.response?.data?.error?.message ||
+                error.message,
+            }
+          );
+
+          // Retry only temporary errors.
+          const shouldRetry =
+            status === 429 ||
+            status === 500 ||
+            status === 502 ||
+            status === 503 ||
+            status === 504;
+
+          if (!shouldRetry || attempt === maxAttempts) {
+            throw error;
+          }
+
+          // Wait before retrying.
+          const delay = attempt * 2000;
+
+          logger.info(
+            `Retrying Gemini request in ${delay}ms...`
+          );
+
+          await new Promise(resolve =>
+            setTimeout(resolve, delay)
+          );
         }
       }
 
-      const answer =
-        response?.data?.candidates?.[0]
-          ?.content?.parts?.[0]?.text;
-
-      return (
-        answer ||
-        'Sorry, I couldn’t generate a response.'
+      throw new Error(
+        'Gemini did not return a valid answer'
       );
     } catch (error) {
-      logger.error(
-        'Gemini Error:',
-        error.response?.data ||
-          error.message
-      );
+      logger.error('Gemini Error:', {
+        status: error.response?.status,
+        message:
+          error.response?.data?.error?.message ||
+          error.message,
+      });
 
-      // Fallback response using retrieved article
-      if (
-        context &&
-        context.length > 0
-      ) {
+      // Graceful fallback.
+      if (context && context.length > 0) {
+        const firstArticle = context[0];
+
         return `Summary of most relevant article:
 
-Title: ${context[0].title}
+Title: ${firstArticle.title || 'Unknown'}
 
 ${
-          context[0].description ||
-          context[0].content.substring(0, 200)
+          firstArticle.description ||
+          firstArticle.content?.substring(0, 300) ||
+          'No summary available.'
         }...`;
       }
 
-      return "I’m having trouble generating a response right now. Please try again later.";
+      return "I'm having trouble generating a response right now. Please try again later.";
     }
   }
 
-  // Pick best matching sentence from article for context
-  extractRelevantText(
-    articlePayload,
-    query
-  ) {
+  // ============================================================
+  // EXTRACT RELEVANT TEXT
+  // ============================================================
+
+  extractRelevantText(articlePayload, query) {
     const {
-      title,
-      description,
-      content
+      title = '',
+      description = '',
+      content = '',
     } = articlePayload;
 
     const fullText =
-      `${title} ${description} ${content}`;
+      `${title} ${description} ${content}`.trim();
 
     const queryWords = query
       .toLowerCase()
-      .split(' ')
-      .filter(
-        word => word.length > 2
-      );
+      .split(/\s+/)
+      .filter(word => word.length > 2);
 
     const sentences = fullText
       .split(/[.!?]+/)
-      .filter(
-        sentence =>
-          sentence.length > 20
-      );
+      .filter(sentence => sentence.trim().length > 20);
 
     let bestSentence = '';
     let maxMatches = 0;
 
-    for (
-      const sentence of sentences
-    ) {
-      const matches =
-        queryWords.filter(word =>
-          sentence
-            .toLowerCase()
-            .includes(word)
-        ).length;
+    for (const sentence of sentences) {
+      const lowerSentence =
+        sentence.toLowerCase();
+
+      const matches = queryWords.filter(word =>
+        lowerSentence.includes(word)
+      ).length;
 
       if (matches > maxMatches) {
         maxMatches = matches;
-        bestSentence =
-          sentence.trim();
+        bestSentence = sentence.trim();
       }
     }
 
@@ -405,7 +401,10 @@ ${
     );
   }
 
-  // Get stats of the Qdrant collection
+  // ============================================================
+  // COLLECTION STATS
+  // ============================================================
+
   async getCollectionStats() {
     try {
       const info =
@@ -414,16 +413,12 @@ ${
         );
 
       return {
-        totalArticles:
-          info.points_count,
-
+        totalArticles: info.points_count,
         vectorDimensions:
           info.config.params.vectors.size,
-
         distance:
           info.config.params.vectors.distance,
-
-        status: info.status
+        status: info.status,
       };
     } catch (error) {
       logger.error(
@@ -432,16 +427,16 @@ ${
       );
 
       return {
-        error: error.message
+        error: error.message,
       };
     }
   }
 
-  // Search articles quickly by keywords
-  async searchArticles(
-    keywords,
-    limit = 10
-  ) {
+  // ============================================================
+  // SEARCH ARTICLES
+  // ============================================================
+
+  async searchArticles(keywords, limit = 10) {
     try {
       const queryEmbedding =
         await this.embeddingService.generateQueryEmbedding(
@@ -454,20 +449,18 @@ ${
           {
             vector: queryEmbedding,
             limit,
-            with_payload: true
+            with_payload: true,
           }
         );
 
       return searchResult.map(r => ({
         id: r.id,
         title: r.payload.title,
-        description:
-          r.payload.description,
+        description: r.payload.description,
         url: r.payload.url,
         source: r.payload.source,
-        publishDate:
-          r.payload.publishDate,
-        similarity: r.score
+        publishDate: r.payload.publishDate,
+        similarity: r.score,
       }));
     } catch (error) {
       logger.error(
@@ -479,7 +472,10 @@ ${
     }
   }
 
-  // Delete all articles from Qdrant
+  // ============================================================
+  // CLEAR ALL ARTICLES
+  // ============================================================
+
   async clearAllArticles() {
     try {
       await this.qdrantClient.deleteCollection(
@@ -488,9 +484,7 @@ ${
 
       await this.initialize();
 
-      logger.info(
-        'Cleared all articles'
-      );
+      logger.info('Cleared all articles');
 
       return true;
     } catch (error) {
@@ -503,7 +497,10 @@ ${
     }
   }
 
-  // Check if Qdrant is connected
+  // ============================================================
+  // QDRANT CONNECTION CHECK
+  // ============================================================
+
   async isConnected() {
     try {
       await this.qdrantClient.getCollections();
@@ -514,7 +511,10 @@ ${
     }
   }
 
-  // Service health check
+  // ============================================================
+  // HEALTH CHECK
+  // ============================================================
+
   async healthCheck() {
     try {
       const isQdrantConnected =
@@ -525,24 +525,18 @@ ${
 
       return {
         status: 'healthy',
-
-        qdrant:
-          isQdrantConnected,
-
+        qdrant: isQdrantConnected,
         articlesCount:
           stats.totalArticles || 0,
-
         lastChecked:
-          new Date().toISOString()
+          new Date().toISOString(),
       };
     } catch (error) {
       return {
         status: 'unhealthy',
-
         error: error.message,
-
         lastChecked:
-          new Date().toISOString()
+          new Date().toISOString(),
       };
     }
   }
