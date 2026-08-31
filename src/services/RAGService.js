@@ -221,7 +221,10 @@ Answer:`;
 
       return answer || "Sorry, I couldn’t generate a response.";
     } catch (error) {
-      logger.error('Error generating answer:', error);
+      logger.error(
+        'Gemini Error:',
+        error.response?.data || error.message
+      );
 
       if (context.length > 0) {
         return `Summary of most relevant article:
