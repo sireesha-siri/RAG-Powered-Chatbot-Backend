@@ -14,7 +14,8 @@ class RAGService {
     });
     this.collectionName = 'news_articles';
     this.geminiApiKey = process.env.GEMINI_API_KEY;
-    this.geminiBaseUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+    this.geminiBaseUrl =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
   }
 
   // Create Qdrant collection if it doesn’t exist
