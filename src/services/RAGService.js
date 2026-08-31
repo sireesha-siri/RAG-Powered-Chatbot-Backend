@@ -14,7 +14,6 @@ const logger = require('../utils/logger');
 // Send Retrieved Context to Gemini
 //      ↓
 // Generate Final Answer
-
 class RAGService {
   constructor() {
     this.embeddingService = new EmbeddingService();
@@ -28,9 +27,9 @@ class RAGService {
 
     this.geminiApiKey = process.env.GEMINI_API_KEY;
 
-    // Stable Gemini model
+    // Fast Gemini model for low-latency responses
     this.geminiBaseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent';
   }
 
   // ============================================================
@@ -95,7 +94,6 @@ class RAGService {
 
         points.push({
           id: i + 1,
-
           vector: embedding,
 
           payload: {
@@ -195,6 +193,7 @@ class RAGService {
         return "I couldn't find any relevant news. Please try rephrasing your question.";
       }
 
+      // Prepare only the useful information from retrieved articles.
       const contextText = context
         .map(
           (article, i) =>
@@ -209,19 +208,18 @@ Content: ${
             }
 Source: ${article.source || 'Unknown'}
 Date: ${article.publishDate || 'Unknown'}
-URL: ${article.url || ''}
 ---`
         )
         .join('\n');
 
       const prompt = `You are a helpful news assistant.
 
-IMPORTANT RULES:
-1. Answer the user's question using ONLY the provided articles.
-2. Do not invent information.
-3. If the articles do not contain enough information, say that the available articles do not provide enough information.
-4. Keep the answer concise and useful.
-5. Mention relevant details from the sources when possible.
+Rules:
+- Answer using ONLY the provided articles.
+- Do not invent information.
+- If the articles do not contain enough information, say so.
+- Keep the answer concise and useful.
+- Mention relevant sources when appropriate.
 
 Context:
 ${contextText}
@@ -232,123 +230,110 @@ ${query}
 Answer:`;
 
       logger.info(
-        `Sending request to Gemini using gemini-3.6-flash`
+        'Sending request to Gemini using gemini-3.5-flash-lite'
       );
 
-      // Retry a few times for temporary 503/429 errors.
-      const maxAttempts = 3;
+      try {
+        const response = await axios.post(
+          `${this.geminiBaseUrl}?key=${this.geminiApiKey}`,
 
-      for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-        try {
-          logger.info(
-            `Sending request to Gemini (attempt ${attempt}/${maxAttempts})`
-          );
-
-          const response = await axios.post(
-            `${this.geminiBaseUrl}?key=${this.geminiApiKey}`,
-            {
-              contents: [
-                {
-                  parts: [
-                    {
-                      text: prompt,
-                    },
-                  ],
-                },
-              ],
-
-              generationConfig: {
-                maxOutputTokens: 512,
+          {
+            contents: [
+              {
+                parts: [
+                  {
+                    text: prompt,
+                  },
+                ],
               },
+            ],
+
+            generationConfig: {
+              maxOutputTokens: 512,
             },
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
+          },
 
-              // Give Gemini more than the old 30 seconds.
-              timeout: 55000,
-            }
-          );
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
 
-          const answer =
-            response.data?.candidates?.[0]?.content?.parts?.[0]
-              ?.text;
-
-          if (answer) {
-            logger.info(
-              'Gemini generated answer successfully'
-            );
-
-            return answer;
+            // Fail faster instead of making the user wait.
+            timeout: 15000,
           }
+        );
 
-          logger.warn(
-            'Gemini returned no answer text'
-          );
-        } catch (error) {
-          const status = error.response?.status;
+        const answer =
+          response.data?.candidates?.[0]?.content?.parts?.[0]
+            ?.text;
 
-          logger.error(
-            `Gemini request failed on attempt ${attempt}`,
-            {
-              status,
-              message:
-                error.response?.data?.error?.message ||
-                error.message,
-            }
-          );
-
-          // Retry only temporary errors.
-          const shouldRetry =
-            status === 429 ||
-            status === 500 ||
-            status === 502 ||
-            status === 503 ||
-            status === 504;
-
-          if (!shouldRetry || attempt === maxAttempts) {
-            throw error;
-          }
-
-          // Wait before retrying.
-          const delay = attempt * 2000;
-
+        if (answer) {
           logger.info(
-            `Retrying Gemini request in ${delay}ms...`
+            'Gemini generated answer successfully'
           );
 
-          await new Promise(resolve =>
-            setTimeout(resolve, delay)
+          return answer;
+        }
+
+        logger.warn(
+          'Gemini returned no answer text'
+        );
+      } catch (error) {
+        const status = error.response?.status;
+
+        const message =
+          error.response?.data?.error?.message ||
+          error.message;
+
+        logger.error('Gemini request failed:', {
+          status,
+          message,
+        });
+
+        // If Gemini is temporarily unavailable,
+        // don't make the user wait through multiple retries.
+        if (
+          status === 429 ||
+          status === 500 ||
+          status === 502 ||
+          status === 503 ||
+          status === 504 ||
+          error.code === 'ECONNABORTED'
+        ) {
+          logger.warn(
+            'Gemini unavailable or timed out. Using article fallback.'
+          );
+        } else {
+          logger.error(
+            'Unexpected Gemini error.'
           );
         }
       }
 
-      throw new Error(
-        'Gemini did not return a valid answer'
-      );
-    } catch (error) {
-      logger.error('Gemini Error:', {
-        status: error.response?.status,
-        message:
-          error.response?.data?.error?.message ||
-          error.message,
-      });
+      // ========================================================
+      // FALLBACK
+      // ========================================================
 
-      // Graceful fallback.
-      if (context && context.length > 0) {
-        const firstArticle = context[0];
+      // Gemini failed, but RAG retrieval worked.
+      // Return the most relevant article instead of
+      // showing an error to the user.
+      const firstArticle = context[0];
 
-        return `Summary of most relevant article:
+      return `Summary of most relevant article:
 
 Title: ${firstArticle.title || 'Unknown'}
 
 ${
-          firstArticle.description ||
-          firstArticle.content?.substring(0, 300) ||
-          'No summary available.'
-        }...`;
-      }
+        firstArticle.description ||
+        firstArticle.relevantText ||
+        firstArticle.content?.substring(0, 300) ||
+        'No summary available.'
+      }...`;
+    } catch (error) {
+      logger.error(
+        'Error generating answer:',
+        error
+      );
 
       return "I'm having trouble generating a response right now. Please try again later.";
     }
@@ -375,7 +360,9 @@ ${
 
     const sentences = fullText
       .split(/[.!?]+/)
-      .filter(sentence => sentence.trim().length > 20);
+      .filter(
+        sentence => sentence.trim().length > 20
+      );
 
     let bestSentence = '';
     let maxMatches = 0;
