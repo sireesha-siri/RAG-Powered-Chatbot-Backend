@@ -18,8 +18,9 @@ class RAGService {
 
     this.geminiApiKey = process.env.GEMINI_API_KEY;
 
+    // Gemini model
     this.geminiBaseUrl =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent';
   }
 
   // Create Qdrant collection if it doesn’t exist
@@ -39,12 +40,20 @@ class RAGService {
           }
         });
 
-        logger.info(`Created Qdrant collection: ${this.collectionName}`);
+        logger.info(
+          `Created Qdrant collection: ${this.collectionName}`
+        );
       } else {
-        logger.info(`Qdrant collection exists: ${this.collectionName}`);
+        logger.info(
+          `Qdrant collection exists: ${this.collectionName}`
+        );
       }
     } catch (error) {
-      logger.error('Error initializing RAG service:', error);
+      logger.error(
+        'Error initializing RAG service:',
+        error
+      );
+
       throw error;
     }
   }
@@ -80,7 +89,8 @@ class RAGService {
             content: article.content || '',
             url: article.link || '',
             publishDate:
-              article.pubDate || new Date().toISOString(),
+              article.pubDate ||
+              new Date().toISOString(),
             source: article.source || 'Unknown',
             category: article.category || 'General',
             createdAt: new Date().toISOString()
@@ -95,10 +105,13 @@ class RAGService {
         );
       }
 
-      await this.qdrantClient.upsert(this.collectionName, {
-        wait: true,
-        points
-      });
+      await this.qdrantClient.upsert(
+        this.collectionName,
+        {
+          wait: true,
+          points
+        }
+      );
 
       logger.info(
         `Stored ${points.length} articles successfully`
@@ -106,7 +119,11 @@ class RAGService {
 
       return points.length;
     } catch (error) {
-      logger.error('Error storing articles:', error);
+      logger.error(
+        'Error storing articles:',
+        error
+      );
+
       throw error;
     }
   }
@@ -119,17 +136,20 @@ class RAGService {
       );
 
       const queryEmbedding =
-        await this.embeddingService.generateQueryEmbedding(query);
+        await this.embeddingService.generateQueryEmbedding(
+          query
+        );
 
-      const searchResult = await this.qdrantClient.search(
-        this.collectionName,
-        {
-          vector: queryEmbedding,
-          limit: k,
-          with_payload: true,
-          score_threshold: 0.3
-        }
-      );
+      const searchResult =
+        await this.qdrantClient.search(
+          this.collectionName,
+          {
+            vector: queryEmbedding,
+            limit: k,
+            with_payload: true,
+            score_threshold: 0.3
+          }
+        );
 
       return searchResult.map(result => ({
         title: result.payload.title,
@@ -140,13 +160,18 @@ class RAGService {
         publishDate: result.payload.publishDate,
         similarity: result.score,
 
-        relevantText: this.extractRelevantText(
-          result.payload,
-          query
-        )
+        relevantText:
+          this.extractRelevantText(
+            result.payload,
+            query
+          )
       }));
     } catch (error) {
-      logger.error('Error retrieving passages:', error);
+      logger.error(
+        'Error retrieving passages:',
+        error
+      );
+
       return [];
     }
   }
@@ -174,12 +199,19 @@ Date: ${article.publishDate}
         )
         .join('\n');
 
-      const prompt = `You are a helpful news assistant. Use only these articles to answer the question.
+      const prompt = `You are a helpful news assistant.
+
+Use ONLY the provided articles to answer the user's question.
+
+If the articles do not contain enough information to answer the question, clearly say that the available articles do not contain enough information.
+
+Do not invent facts.
 
 Context:
 ${contextText}
 
-User Question: ${query}
+User Question:
+${query}
 
 Answer:`;
 
@@ -198,17 +230,12 @@ Answer:`;
           ],
 
           generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
             maxOutputTokens: 1024
           }
         },
         {
           headers: {
             'Content-Type': 'application/json',
-
-            // Gemini API authentication
             'x-goog-api-key': this.geminiApiKey
           },
 
@@ -219,14 +246,20 @@ Answer:`;
       const answer =
         response.data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-      return answer || "Sorry, I couldn’t generate a response.";
+      return (
+        answer ||
+        'Sorry, I couldn’t generate a response.'
+      );
     } catch (error) {
+      // Log the actual Gemini error response
       logger.error(
         'Gemini Error:',
-        error.response?.data || error.message
+        error.response?.data ||
+          error.message
       );
 
-      if (context.length > 0) {
+      // Fallback response using retrieved article
+      if (context && context.length > 0) {
         return `Summary of most relevant article:
 
 Title: ${context[0].title}
@@ -243,30 +276,39 @@ ${
 
   // Pick best matching sentence from article for context
   extractRelevantText(articlePayload, query) {
-    const { title, description, content } = articlePayload;
+    const {
+      title,
+      description,
+      content
+    } = articlePayload;
 
     const fullText = `${title} ${description} ${content}`;
 
     const queryWords = query
       .toLowerCase()
       .split(' ')
-      .filter(w => w.length > 2);
+      .filter(word => word.length > 2);
 
     const sentences = fullText
       .split(/[.!?]+/)
-      .filter(s => s.length > 20);
+      .filter(
+        sentence => sentence.length > 20
+      );
 
     let bestSentence = '';
     let maxMatches = 0;
 
     for (const sentence of sentences) {
-      const matches = queryWords.filter(w =>
-        sentence.toLowerCase().includes(w)
+      const matches = queryWords.filter(word =>
+        sentence
+          .toLowerCase()
+          .includes(word)
       ).length;
 
       if (matches > maxMatches) {
         maxMatches = matches;
-        bestSentence = sentence.trim();
+        bestSentence =
+          sentence.trim();
       }
     }
 
@@ -286,15 +328,22 @@ ${
         );
 
       return {
-        totalArticles: info.points_count,
+        totalArticles:
+          info.points_count,
+
         vectorDimensions:
           info.config.params.vectors.size,
+
         distance:
           info.config.params.vectors.distance,
+
         status: info.status
       };
     } catch (error) {
-      logger.error('Error getting stats:', error);
+      logger.error(
+        'Error getting stats:',
+        error
+      );
 
       return {
         error: error.message
@@ -303,7 +352,10 @@ ${
   }
 
   // Search articles quickly by keywords
-  async searchArticles(keywords, limit = 10) {
+  async searchArticles(
+    keywords,
+    limit = 10
+  ) {
     try {
       const queryEmbedding =
         await this.embeddingService.generateQueryEmbedding(
@@ -323,14 +375,19 @@ ${
       return searchResult.map(r => ({
         id: r.id,
         title: r.payload.title,
-        description: r.payload.description,
+        description:
+          r.payload.description,
         url: r.payload.url,
         source: r.payload.source,
-        publishDate: r.payload.publishDate,
+        publishDate:
+          r.payload.publishDate,
         similarity: r.score
       }));
     } catch (error) {
-      logger.error('Error searching articles:', error);
+      logger.error(
+        'Error searching articles:',
+        error
+      );
 
       return [];
     }
@@ -345,11 +402,16 @@ ${
 
       await this.initialize();
 
-      logger.info('Cleared all articles');
+      logger.info(
+        'Cleared all articles'
+      );
 
       return true;
     } catch (error) {
-      logger.error('Error clearing articles:', error);
+      logger.error(
+        'Error clearing articles:',
+        error
+      );
 
       throw error;
     }
